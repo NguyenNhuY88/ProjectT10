@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".view.NewCardActivity">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/enter_card_name"/>
+        <EditText
+            android:id="@+id/edt_card_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_margin="5dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/btn_scan_barcode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:drawableRight="@drawable/ic_center_focus_weak_black_24dp"
+            android:text="@string/scan_card" />
+        <ImageView
+            android:id="@+id/iv_barcode"
+            android:layout_width="100dp"
+            android:layout_height="100dp"/>
+
+        <TextView
+            android:id="@+id/tv_barcode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_margin="30dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_weight="1"
+            android:padding="5dp"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Ảnh trước"/>
+            <ImageView
+                android:id="@+id/iv_card_front_image"
+                android:src="@mipmap/ic_no_image"
+                android:layout_width="80dp"
+                android:layout_height="80dp"/>
+            <Button
+                android:id="@+id/btn_add_front_image"
+                android:text="Thêm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_weight="1"
+            android:padding="5dp"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Ảnh Sau"/>
+            <ImageView
+                android:id="@+id/iv_card_back_image"
+                android:src="@mipmap/ic_no_image"
+                android:layout_width="80dp"
+                android:layout_height="80dp"/>
+            <Button
+                android:id="@+id/btn_add_back_image"
+                android:text="Thêm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100dp">
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/btn_accept"
+            android:text="Chấp nhận"
+            android:background="@null"
+            android:layout_marginLeft="100dp"
+            android:drawableLeft="@drawable/ic_check_black_24dp"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/btn_cancel"
+            android:text="Hủy bỏ"
+            android:background="@null"
+            android:layout_marginLeft="40dp"
+            android:drawableLeft="@drawable/ic_clear_black_24dp"/>
+    </LinearLayout>
+    <ProgressBar
+        android:id="@+id/pb_add_card"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_gravity="center|bottom"
+        android:layout_marginBottom="20dp"
+        android:visibility="gone" />
+</LinearLayout>
