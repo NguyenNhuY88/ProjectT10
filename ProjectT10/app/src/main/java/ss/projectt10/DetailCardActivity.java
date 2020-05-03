@@ -17,7 +17,7 @@ import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 
 import java.util.Hashtable;
-import ss.projectt10.model.MyCard;
+import ss.projectt10.model.Card;
 
 public class DetailCardActivity extends AppCompatActivity {
     private ImageView codeImage;
@@ -32,7 +32,7 @@ public class DetailCardActivity extends AppCompatActivity {
         code = findViewById(R.id.ac_detail_card_code);
 
         Intent intent = getIntent();
-        MyCard card = (MyCard) intent.getSerializableExtra("data");
+        Card card = (Card) intent.getSerializableExtra("data");
         if (card != null) {
             String key = card.getCardCode();
             String codeType = card.getCodeType();

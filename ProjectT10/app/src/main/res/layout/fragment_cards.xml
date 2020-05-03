@@ -16,7 +16,7 @@
             <Button
                 android:layout_width="60dp"
                 android:layout_height="60dp"
-                android:id="@+id/fr_cards_addNewCard"
+                android:id="@+id/btn_add_card"
                 android:background="@null"
                 android:text="Tạo"
                 android:drawableRight="@drawable/ic_add_circle_black_24dp"
@@ -24,7 +24,7 @@
             <SearchView
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:id="@+id/fr_cards_search"
+                android:id="@+id/sv_seach_card"
                 android:queryHint="Tìm kiếm thẻ"
                 android:iconifiedByDefault="false" />
         </LinearLayout>

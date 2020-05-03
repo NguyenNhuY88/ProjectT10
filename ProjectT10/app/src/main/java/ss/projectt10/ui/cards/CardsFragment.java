@@ -14,7 +14,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ListView;
 import android.widget.SearchView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -31,8 +30,8 @@ import ss.projectt10.MainActivity;
 import ss.projectt10.R;
 import ss.projectt10.adapter.CardRecyclerAdapter;
 import ss.projectt10.model.Card;
-import ss.projectt10.model.MyCard;
-import ss.projectt10.view.NewCardActivity;
+import ss.projectt10.view.CreateCardActivity;
+
 
 import static ss.projectt10.BaseActivity.DBPROJECTNAME;
 import static ss.projectt10.BaseActivity.DBUSER_CARD;
@@ -48,7 +47,7 @@ public class CardsFragment extends Fragment {
 
     private RecyclerView recyclerViewCard;
     private CardRecyclerAdapter recyclerAdapterCard;
-    private ArrayList<MyCard> cardsList2;
+    private ArrayList<Card> cardsList;
     public static CardsFragment newInstance() {
         return new CardsFragment();
     }
@@ -69,17 +68,17 @@ public class CardsFragment extends Fragment {
 
         loadListCards();
 
-        btnAddNewCard = cardsView.findViewById(R.id.fr_cards_addNewCard);
+        btnAddNewCard = cardsView.findViewById(R.id.btn_add_card);
         btnAddNewCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
            //     Intent intent = new Intent(getContext(), CreateCard.class);
-                Intent intent = new Intent(getContext(), NewCardActivity.class);
+                Intent intent = new Intent(getContext(), CreateCardActivity.class);
                 startActivity(intent);
             }
         });
 
-        searchCard = cardsView.findViewById(R.id.fr_cards_search);
+        searchCard = cardsView.findViewById(R.id.sv_seach_card);
         searchCard.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -95,20 +94,20 @@ public class CardsFragment extends Fragment {
     }
     private void loadListCards() {
         recyclerViewCard = cardsView.findViewById(R.id.rcv_card);
-        cardsList2 = new ArrayList<>();
+        cardsList = new ArrayList<>();
 
         database.child(DBPROJECTNAME).child(DBUSER_CARD).child(user.getUid()).addValueEventListener(new ValueEventListener() {
 
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                cardsList2.clear();
+                cardsList.clear();
                 for (DataSnapshot child : dataSnapshot.getChildren()) {
-                    MyCard card = child.getValue(MyCard.class);
-                    cardsList2.add(card);
+                    Card card = child.getValue(Card.class);
+                    cardsList.add(card);
                     Log.i("CARD", card.getCardName());
                 }
 
-                recyclerAdapterCard = new CardRecyclerAdapter(getContext(), cardsList2);
+                recyclerAdapterCard = new CardRecyclerAdapter(getContext(), cardsList);
                 recyclerViewCard.setLayoutManager(new LinearLayoutManager(getContext()));
                 recyclerViewCard.setAdapter(recyclerAdapterCard);
             }

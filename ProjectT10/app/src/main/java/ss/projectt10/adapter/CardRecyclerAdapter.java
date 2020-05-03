@@ -23,15 +23,14 @@ import java.util.List;
 import ss.projectt10.DetailCardActivity;
 import ss.projectt10.R;
 import ss.projectt10.model.Card;
-import ss.projectt10.model.MyCard;
 
 public class CardRecyclerAdapter  extends RecyclerView.Adapter<CardRecyclerAdapter.MyViewHolder> implements Filterable {
     private Context mContext;
-    private ArrayList<MyCard> cardsList;
+    private ArrayList<Card> cardsList;
 
-    private ArrayList<MyCard> cardsListAll;
+    private ArrayList<Card> cardsListAll;
 
-    public CardRecyclerAdapter(Context context, ArrayList<MyCard> cardsList) {
+    public CardRecyclerAdapter(Context context, ArrayList<Card> cardsList) {
         this.mContext = context;
         this.cardsList = cardsList;
         cardsListAll = new ArrayList<>();
@@ -43,11 +42,11 @@ public class CardRecyclerAdapter  extends RecyclerView.Adapter<CardRecyclerAdapt
         return new Filter() {
             @Override
             protected FilterResults performFiltering(CharSequence charSequence) {
-                List<MyCard> filteredList = new ArrayList<>();
+                List<Card> filteredList = new ArrayList<>();
                 if (charSequence == null || charSequence.length() == 0) {
                     filteredList.addAll(cardsListAll);
                 } else {
-                    for (MyCard card : cardsListAll) {
+                    for (Card card : cardsListAll) {
                         if (card.getCardName().toLowerCase().contains(charSequence.toString().toLowerCase())) {
                             filteredList.add(card);
                         }
@@ -62,7 +61,7 @@ public class CardRecyclerAdapter  extends RecyclerView.Adapter<CardRecyclerAdapt
             @Override
             protected void publishResults(CharSequence constraint, FilterResults results) {
                 cardsList.clear();
-                cardsList.addAll((Collection<? extends MyCard>) results.values);
+                cardsList.addAll((Collection<? extends Card>) results.values);
                 notifyDataSetChanged();
             }
         };
@@ -73,20 +72,21 @@ public class CardRecyclerAdapter  extends RecyclerView.Adapter<CardRecyclerAdapt
     @Override
     public CardRecyclerAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-        View view = layoutInflater.inflate(R.layout.item_my_card, parent, false);
+        View view = layoutInflater.inflate(R.layout.item_card, parent, false);
         MyViewHolder myViewHolder = new MyViewHolder(view);
         return myViewHolder;
     }
 
     @Override
     public void onBindViewHolder(@NonNull CardRecyclerAdapter.MyViewHolder holder, final int position) {
-        Glide.with(mContext).load(cardsList.get(position).getCardFrontImage()).into(holder.cardImage);
+        Glide.with(mContext).load(cardsList.get(position).getcardAvatar()).into(holder.cardImage);
         holder.cardName.setText(cardsList.get(position).getCardName());
+        holder.category.setText(cardsList.get(position).getCategory());
         holder.parentLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(mContext, DetailCardActivity.class);
-                MyCard detailCard = cardsList.get(position);
+                Card detailCard = cardsList.get(position);
                 intent.putExtra("data", detailCard);
                 mContext.startActivity(intent);
             }
@@ -100,7 +100,7 @@ public class CardRecyclerAdapter  extends RecyclerView.Adapter<CardRecyclerAdapt
 
     class MyViewHolder extends RecyclerView.ViewHolder {
         ImageView cardImage;
-        TextView cardName;
+        TextView cardName, category;
         ViewGroup parentLayout;
 
         public MyViewHolder(@NonNull View itemView) {
@@ -108,6 +108,7 @@ public class CardRecyclerAdapter  extends RecyclerView.Adapter<CardRecyclerAdapt
             cardName = itemView.findViewById(R.id.tv_card_name);
             cardImage = itemView.findViewById(R.id.iv_card);
             parentLayout = itemView.findViewById(R.id.parent_layout);
+            category = itemView.findViewById(R.id.tv_category);
         }
 
     }
