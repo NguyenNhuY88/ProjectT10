@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Card implements Serializable {
+    private String ID;
     private String cardCode;
     private String cardName;
     private String cardFrontImage;
@@ -22,7 +23,8 @@ public class Card implements Serializable {
     public Card() {
     }
 
-    public Card(String cardCode, String cardName, String cardFrontImage, String cardBackImage, String codeType, String category, String cardAvatar, String note, boolean isFavorite) {
+    public Card(String id, String cardCode, String cardName, String cardFrontImage, String cardBackImage, String codeType, String category, String cardAvatar, String note, boolean isFavorite) {
+        this.ID = id;
         this.cardCode = cardCode;
         this.cardName = cardName;
         this.cardFrontImage = cardFrontImage;
@@ -33,6 +35,16 @@ public class Card implements Serializable {
         this.note = note;
         this.isFavorite = isFavorite;
     }
+
+    public String getID() {
+        return ID;
+    }
+
+    public void setID(String ID) {
+        this.ID = ID;
+    }
+
+
 
     public String getCardCode() {
         return cardCode;
@@ -109,6 +121,7 @@ public class Card implements Serializable {
     @Exclude
     public Map<String, Object> toMap() {
         HashMap<String, Object> result = new HashMap<>();
+        result.put("id", ID);
         result.put("cardCode", cardCode);
         result.put("cardName", cardName);
         result.put("cardFrontImage", cardFrontImage);

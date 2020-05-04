@@ -38,10 +38,16 @@ import java.io.ByteArrayOutputStream;
 import java.util.Calendar;
 import java.util.Hashtable;
 
-public class BaseActivity extends AppCompatActivity {
+public class BaseActivity extends AppCompatActivity  {
     public static final String DBPROJECTNAME = "T10DATABASE";
     public static final String DBUSER = "users";
     public static final String DBUSER_CARD = "user-cards";
+
+
+    public String getUid() {
+        return FirebaseAuth.getInstance().getCurrentUser().getUid();
+    }
+
 //    public final FirebaseStorage mStorage = FirebaseStorage.getInstance();
 //    final StorageReference mStorageRef = mStorage.getReferenceFromUrl("gs://projectt10-cc6d8.appspot.com/PROJECTT10");
     private ProgressBar mProgressBar;
@@ -62,9 +68,6 @@ public class BaseActivity extends AppCompatActivity {
         }
     }
 
-    public String getUid() {
-        return FirebaseAuth.getInstance().getCurrentUser().getUid();
-    }
 
 //    public String SaveImageAndGetLink (ImageView mImageView, String mImageName) {
 //        Bitmap capture = Bitmap.createBitmap(

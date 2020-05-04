@@ -165,16 +165,16 @@ public class CreateCardActivity extends BaseActivity {
         if (mCodeType == null) {
             Toast.makeText(this, "Không có mã thẻ", Toast.LENGTH_SHORT).show();
         } else if (mCardCode != null ) {
-
-
-            Card myCard = new Card(mCardCode, mCardName, "", "", mCodeType, mCategory, mCardAvatar, "", mIsFavoriteCard);
-
-//            DatabaseReference database = FirebaseDatabase.getInstance().getReference();
-//            database.child("card").child("MASON").child("cards").child(nameCard).setValue(card);
-            Map<String, Object> cardValues = myCard.toMap();
             DatabaseReference database = FirebaseDatabase.getInstance().getReference();
             String uId = getUid();
-            database.child(DBPROJECTNAME).child(DBUSER_CARD).child(uId).push().setValue(cardValues);
+            String id = database.child(DBPROJECTNAME).child(DBUSER_CARD).child(uId).push().getKey();
+
+            Card myCard = new Card(id, mCardCode, mCardName, "", "", mCodeType, mCategory, mCardAvatar, "", mIsFavoriteCard);
+
+            Map<String, Object> cardValues = myCard.toMap();
+
+
+            database.child(DBPROJECTNAME).child(DBUSER_CARD).child(uId).child(id).setValue(cardValues);
             showProgressBar();
             finish();
         } else {
