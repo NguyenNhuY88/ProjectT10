@@ -23,6 +23,7 @@ import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -35,9 +36,16 @@ import com.google.firebase.storage.UploadTask;
 import ss.projectt10.PersonalUpdateActivity;
 import ss.projectt10.R;
 import ss.projectt10.model.Account;
+import ss.projectt10.model.User;
+
+import static android.app.Activity.RESULT_OK;
+import static ss.projectt10.BaseActivity.DBPROJECTNAME;
+import static ss.projectt10.BaseActivity.DBUSER;
+import static ss.projectt10.BaseActivity.DBUSER_CARD;
 
 public class PersonalFragment extends Fragment {
-
+    private final int REQUES_CHANGE_AVATAR = 13579;
+    private final String uId = FirebaseAuth.getInstance().getCurrentUser().getUid();
     private PersonalViewModel mViewModel;
     private View personalView;
 
@@ -51,7 +59,7 @@ public class PersonalFragment extends Fragment {
 
     private Uri uri;
 
-    private Account myAcc;
+    private User myAcc;
 
     public static PersonalFragment newInstance() {
         return new PersonalFragment();
@@ -72,12 +80,11 @@ public class PersonalFragment extends Fragment {
         avatar = personalView.findViewById(R.id.fr_personal_avatar);
         fullName = personalView.findViewById(R.id.fr_personal_fullName);
         dateOfBirth = personalView.findViewById(R.id.fr_personal_dateOfBirth);
-        accountId = personalView.findViewById(R.id.fr_personal_accountId);
-        password = personalView.findViewById(R.id.fr_personal_password);
+
         address = personalView.findViewById(R.id.fr_personal_address);
         email = personalView.findViewById(R.id.fr_personal_email);
         phoneNumber = personalView.findViewById(R.id.fr_personal_phoneNumber);
-        company = personalView.findViewById(R.id.fr_personal_company);
+
 
         numberOfCard = personalView.findViewById(R.id.fr_personal_numberOfCard);
 
@@ -104,20 +111,19 @@ public class PersonalFragment extends Fragment {
     }
 
     private void loadDataPersonal() {
-        database.child("account").child("MASON").addValueEventListener(new ValueEventListener() {
+        database.child(DBPROJECTNAME).child(DBUSER).child(uId).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                myAcc = dataSnapshot.getValue(Account.class);
-                fullName.setText(myAcc.getFullName());
-                dateOfBirth.setText(myAcc.getDateOfBirth());
-                accountId.setText(myAcc.getAccountId());
-                password.setText(myAcc.getPassword());
-                address.setText(myAcc.getAddress());
-                email.setText(myAcc.getEmail());
-                phoneNumber.setText(myAcc.getPhoneNumber());
-                company.setText(myAcc.getCompany());
+                myAcc = dataSnapshot.getValue(User.class);
+
+                    fullName.setText(myAcc.getUsername());
+                    dateOfBirth.setText(myAcc.getDateOfBirth());
+                    address.setText(myAcc.getAddress());
+                    email.setText(myAcc.getEmail());
+                    phoneNumber.setText(myAcc.getPhoneNumber());
 
                 String url = myAcc.getAvatar();
+
                 Glide.with(getActivity()).load(url).into(avatar);
             }
 
@@ -127,7 +133,7 @@ public class PersonalFragment extends Fragment {
             }
         });
 
-        database.child("card").child("MASON").child("cards").addValueEventListener(new ValueEventListener() {
+        database.child(DBPROJECTNAME).child(DBUSER_CARD).child(uId).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 numberOfCard.setText("" +dataSnapshot.getChildrenCount());
@@ -145,14 +151,14 @@ public class PersonalFragment extends Fragment {
         Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(intent, 1);
+        startActivityForResult(intent, REQUES_CHANGE_AVATAR);
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == 1 && resultCode == -1 && data != null && data.getData() != null) {
+        if (requestCode == REQUES_CHANGE_AVATAR && resultCode == RESULT_OK && data != null && data.getData() != null) {
             uri = data.getData();
             Glide.with(this).load(uri).into(avatar);
             avatar.setImageURI(uri);
@@ -162,7 +168,7 @@ public class PersonalFragment extends Fragment {
     }
 
     private void upLoadImage() {
-        final StorageReference imageReference = storage.child(accountId.getText().toString() + ".jpg");
+        final StorageReference imageReference = storage.child("PROJECTT10").child(uId).child("avatar.jpg");
         UploadTask uploadTask = imageReference.putFile(uri);
         Task<Uri> uriTask = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
             @Override
@@ -178,7 +184,7 @@ public class PersonalFragment extends Fragment {
             public void onComplete(@NonNull Task<Uri> task) {
                 if (task.isSuccessful()) {
                     Uri downloadUri = task.getResult();
-                    database.child("account").child("MASON").child("avatar").setValue(downloadUri.toString());
+                    database.child(DBPROJECTNAME).child(DBUSER).child(uId).child("avatar").setValue(downloadUri.toString());
                 } else {
                     Toast.makeText(getActivity(), "Có lỗi!!!", Toast.LENGTH_SHORT).show();
                 }

@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -98,10 +99,11 @@ public class CardRecyclerAdapter  extends RecyclerView.Adapter<CardRecyclerAdapt
         return cardsList.size();
     }
 
-    class MyViewHolder extends RecyclerView.ViewHolder {
+    public class MyViewHolder extends RecyclerView.ViewHolder {
         ImageView cardImage;
         TextView cardName, category;
         ViewGroup parentLayout;
+        public View viewBackground, viewForeground;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -109,7 +111,24 @@ public class CardRecyclerAdapter  extends RecyclerView.Adapter<CardRecyclerAdapt
             cardImage = itemView.findViewById(R.id.iv_card);
             parentLayout = itemView.findViewById(R.id.parent_layout);
             category = itemView.findViewById(R.id.tv_category);
+
+            viewBackground = itemView.findViewById(R.id.view_background);
+            viewForeground = itemView.findViewById(R.id.view_foreground);
         }
 
     }
+    public void removeCardItem(int position) {
+        cardsList.remove(position);
+        // notify the item removed by position
+        // to perform recycler view delete animations
+        // NOTE: don't call notifyDataSetChanged()
+        notifyItemRemoved(position);
+    }
+
+    public void restoreCardItem(Card item, int position) {
+        cardsList.add(position, item);
+        // notify item added by position
+        notifyItemInserted(position);
+    }
+
 }

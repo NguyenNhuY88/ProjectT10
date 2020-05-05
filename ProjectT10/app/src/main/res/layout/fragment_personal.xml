@@ -73,40 +73,40 @@
             android:layout_marginBottom="10dp"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp">
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Tài khoản"
-                    android:textSize="18sp" />
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/fr_personal_accountId"
-                    android:textSize="18sp"
-                    android:textAlignment="viewEnd"
-                    android:layout_gravity="end" />
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Mật khẩu"
-                    android:textSize="18sp" />
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/fr_personal_password"
-                    android:textSize="18sp"
-                    android:textAlignment="viewEnd"
-                    android:layout_gravity="end" />
-            </LinearLayout>
+<!--            <LinearLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:orientation="horizontal">-->
+<!--                <TextView-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="Tài khoản"-->
+<!--                    android:textSize="18sp" />-->
+<!--                <TextView-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:id="@+id/fr_personal_accountId"-->
+<!--                    android:textSize="18sp"-->
+<!--                    android:textAlignment="viewEnd"-->
+<!--                    android:layout_gravity="end" />-->
+<!--            </LinearLayout>-->
+<!--            <LinearLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:orientation="horizontal">-->
+<!--                <TextView-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="Mật khẩu"-->
+<!--                    android:textSize="18sp" />-->
+<!--                <TextView-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:id="@+id/fr_personal_password"-->
+<!--                    android:textSize="18sp"-->
+<!--                    android:textAlignment="viewEnd"-->
+<!--                    android:layout_gravity="end" />-->
+<!--            </LinearLayout>-->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -158,23 +158,23 @@
                     android:textAlignment="viewEnd"
                     android:layout_gravity="end" />
             </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Nơi làm việc"
-                    android:textSize="18sp" />
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/fr_personal_company"
-                    android:textSize="18sp"
-                    android:textAlignment="viewEnd"
-                    android:layout_gravity="end" />
-            </LinearLayout>
+<!--            <LinearLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:orientation="horizontal">-->
+<!--                <TextView-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="Nơi làm việc"-->
+<!--                    android:textSize="18sp" />-->
+<!--                <TextView-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:id="@+id/fr_personal_company"-->
+<!--                    android:textSize="18sp"-->
+<!--                    android:textAlignment="viewEnd"-->
+<!--                    android:layout_gravity="end" />-->
+<!--            </LinearLayout>-->
         </LinearLayout>
         <TextView
             android:layout_width="match_parent"

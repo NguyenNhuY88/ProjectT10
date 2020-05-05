@@ -1,11 +1,13 @@
 package ss.projectt10.ui.cards;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -14,8 +16,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.SearchView;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -25,10 +29,13 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Map;
 
+import ss.projectt10.BaseActivity;
 import ss.projectt10.MainActivity;
 import ss.projectt10.R;
 import ss.projectt10.adapter.CardRecyclerAdapter;
+import ss.projectt10.helper.RecyclerItemTouchHelper;
 import ss.projectt10.model.Card;
 import ss.projectt10.view.CreateCardActivity;
 
@@ -36,7 +43,7 @@ import ss.projectt10.view.CreateCardActivity;
 import static ss.projectt10.BaseActivity.DBPROJECTNAME;
 import static ss.projectt10.BaseActivity.DBUSER_CARD;
 
-public class CardsFragment extends Fragment {
+public class CardsFragment extends Fragment  implements RecyclerItemTouchHelper.RecyclerItemTouchHelperListener {
     static final String TAG = MainActivity.class.getSimpleName();
     private View cardsView;
 
@@ -48,6 +55,8 @@ public class CardsFragment extends Fragment {
     private RecyclerView recyclerViewCard;
     private CardRecyclerAdapter recyclerAdapterCard;
     private ArrayList<Card> cardsList;
+    private FrameLayout frameLayout;
+
     public static CardsFragment newInstance() {
         return new CardsFragment();
     }
@@ -91,6 +100,11 @@ public class CardsFragment extends Fragment {
                 return true;
             }
         });
+
+        frameLayout = cardsView.findViewById(R.id.frame_layout);
+
+        ItemTouchHelper.SimpleCallback itemTouchHelperCallback = new RecyclerItemTouchHelper(0, ItemTouchHelper.LEFT, this);
+        new ItemTouchHelper(itemTouchHelperCallback).attachToRecyclerView(recyclerViewCard);
     }
     private void loadListCards() {
         recyclerViewCard = cardsView.findViewById(R.id.rcv_card);
@@ -120,5 +134,44 @@ public class CardsFragment extends Fragment {
     }
 
 
+    @Override
+    public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction, int position) {
+        if (viewHolder instanceof CardRecyclerAdapter.MyViewHolder) {
+            // get the removed item name to display it in snack bar
+            String name = cardsList.get(viewHolder.getAdapterPosition()).getCardName();
 
+            // backup of removed item for undo purpose
+            final Card deletedItem = cardsList.get(viewHolder.getAdapterPosition());
+            final int deletedIndex = viewHolder.getAdapterPosition();
+
+            deleteCard(deletedItem);
+            // remove the item from recycler view
+           recyclerAdapterCard.removeCardItem(viewHolder.getAdapterPosition());
+
+            // showing snack bar with Undo option
+            Snackbar snackbar = Snackbar
+                    .make(frameLayout, name + " removed from  list card!", Snackbar.LENGTH_LONG);
+            snackbar.setAction("UNDO", new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    AddCardAgain(deletedItem);
+                    // undo is selected, restore the deleted item
+                   recyclerAdapterCard.restoreCardItem(deletedItem, deletedIndex);
+                }
+            });
+            snackbar.setActionTextColor(Color.YELLOW);
+            snackbar.show();
+        }
+    }
+    public void AddCardAgain(Card myCard){
+
+        Map<String, Object> cardValues = myCard.toMap();
+        database.child(DBPROJECTNAME).child(DBUSER_CARD).child(user.getUid()).child(myCard.getID()).setValue(cardValues);
+    }
+    public void deleteCard(Card myCard){
+        database.child(DBPROJECTNAME).child(DBUSER_CARD).child(user.getUid()).child(myCard.getID()).removeValue();
+
+
+    }
 }
+

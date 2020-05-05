@@ -1,4 +1,4 @@
-package ss.projectt10.ui.search;
+package ss.projectt10.ui.search_location;
 
 import androidx.lifecycle.ViewModel;
 
