@@ -1,9 +1,10 @@
 package ss.projectt10.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Category {
+public class Category implements Serializable {
     private String nameCard;
     private String imageIcon;
     private String cardType;

@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -32,6 +33,8 @@ import ss.projectt10.model.Category;
 import ss.projectt10.model.Card;
 import ss.projectt10.ui.category.CategorySpinnerAdapter;
 
+import static ss.projectt10.helper.Util.DATA_CATEGORY;
+
 public class CreateCardActivity extends BaseActivity {
     private Spinner mSuggestCardSpiner;
 
@@ -40,16 +43,17 @@ public class CreateCardActivity extends BaseActivity {
     private TextView mCardCodeTextView, mCardNameTextView, mCardTypeTexView;
     private CheckBox mIsFavoriteCheckBox;
     private ImageView mBarcodeImage;
-    private String mCodeType, mCardAvatar, mCardName, mCardCode, mCategory;
+    private String mCodeType, mCardAvatar, mCardName, mCardCode, mCategory, mNote;
     private Boolean mIsFavoriteCard;
+    private EditText mNoteField;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_card);
 
-        addItemOnSpinner();
+        //addItemOnSpinner();
         initView();
-
+        getCardSuggestInfo();
 
         mScanButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,15 +76,6 @@ public class CreateCardActivity extends BaseActivity {
             }
         });
 
-//        mIsFavoriteCheckBox.setChecked(false);
-//        mIsFavoriteCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-//            @Override
-//            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-//
-//                mIsFavoriteCard = isChecked;
-//            }
-//        });
-
     }
     private void initView(){
         mCardCodeTextView = findViewById(R.id.tv_new_card_code);
@@ -92,42 +87,15 @@ public class CreateCardActivity extends BaseActivity {
         mIsFavoriteCheckBox = findViewById(R.id.cb_favorite);
         mBarcodeImage = findViewById(R.id.iv_new_barcode);
         setProgressBar(R.id.pb_add_card);
+        mNoteField = findViewById(R.id.edt_add_card_note);
     }
-    private void addItemOnSpinner() {
-        mSuggestCardSpiner = findViewById(R.id.spinner_suggest_card);
-        mDatabase = FirebaseDatabase.getInstance().getReference();
 
-        final ArrayList<Category> categoryList = new ArrayList<>();
-        final CategorySpinnerAdapter adapter = new CategorySpinnerAdapter(this, android.R.layout.simple_spinner_dropdown_item, categoryList);
-        mDatabase.child("caterory").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot child : dataSnapshot.getChildren()) {
-                    Category category = child.getValue(Category.class);
-
-                    categoryList.add(category);
-                }
-                mSuggestCardSpiner.setAdapter(adapter);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-
-
-        mSuggestCardSpiner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                loadDataCategory(categoryList.get(position));
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
+    private void getCardSuggestInfo(){
+        Intent intent = getIntent();
+        Category cardsuggest = (Category) intent.getSerializableExtra(DATA_CATEGORY);
+        if (cardsuggest != null) {
+            loadDataCategory(cardsuggest);
+        }
     }
 
     private void loadDataCategory(Category defaultCategory) {
@@ -164,6 +132,7 @@ public class CreateCardActivity extends BaseActivity {
         mCardCode = mCardCodeTextView.getText().toString();
         mCardName = mCardNameTextView.getText().toString();
         mCategory = mCardTypeTexView.getText().toString();
+        mNote = mNoteField.getText().toString();
         if (mCodeType == null) {
             Toast.makeText(this, "Không có mã thẻ", Toast.LENGTH_SHORT).show();
         } else if (mCardCode != null ) {
@@ -171,7 +140,7 @@ public class CreateCardActivity extends BaseActivity {
             String uId = getUid();
             String id = database.child(DBPROJECTNAME).child(DBUSER_CARD).child(uId).push().getKey();
 
-            Card myCard = new Card(id, mCardCode, mCardName, "", "", mCodeType, mCategory, mCardAvatar, "", mIsFavoriteCard);
+            Card myCard = new Card(id, mCardCode, mCardName, "", "", mCodeType, mCategory, mCardAvatar,mNote , mIsFavoriteCard);
 
             Map<String, Object> cardValues = myCard.toMap();
 

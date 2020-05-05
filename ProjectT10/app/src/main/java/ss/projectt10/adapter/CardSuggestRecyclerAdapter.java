@@ -28,6 +28,9 @@ package ss.projectt10.adapter;
         import ss.projectt10.R;
         import ss.projectt10.model.Card;
         import ss.projectt10.model.Category;
+        import ss.projectt10.view.CreateCardActivity;
+
+        import static ss.projectt10.helper.Util.DATA_CATEGORY;
 
 public class CardSuggestRecyclerAdapter  extends RecyclerView.Adapter<CardSuggestRecyclerAdapter.MyViewHolder> implements Filterable {
     private Context mContext;
@@ -61,11 +64,11 @@ public class CardSuggestRecyclerAdapter  extends RecyclerView.Adapter<CardSugges
         holder.parentLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(mContext,"Implement this method", Toast.LENGTH_LONG).show();
-//                Intent intent = new Intent(mContext, DetailCardActivity.class);
-//                Card detailCard = cardsList.get(position);
-//                intent.putExtra("data", detailCard);
-//                mContext.startActivity(intent);
+              //  Toast.makeText(mContext,"Implement this method", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(mContext, CreateCardActivity.class);
+                Category category = cardsList.get(position);
+                intent.putExtra(DATA_CATEGORY, category);
+                mContext.startActivity(intent);
             }
         });
     }

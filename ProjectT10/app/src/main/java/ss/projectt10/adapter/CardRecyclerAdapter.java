@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -24,6 +23,8 @@ import java.util.List;
 import ss.projectt10.DetailCardActivity;
 import ss.projectt10.R;
 import ss.projectt10.model.Card;
+
+import static ss.projectt10.helper.Util.DATA_CARD;
 
 public class CardRecyclerAdapter  extends RecyclerView.Adapter<CardRecyclerAdapter.MyViewHolder> implements Filterable {
     private Context mContext;
@@ -80,7 +81,7 @@ public class CardRecyclerAdapter  extends RecyclerView.Adapter<CardRecyclerAdapt
 
     @Override
     public void onBindViewHolder(@NonNull CardRecyclerAdapter.MyViewHolder holder, final int position) {
-        Glide.with(mContext).load(cardsList.get(position).getcardAvatar()).into(holder.cardImage);
+        Glide.with(mContext).load(cardsList.get(position).getCardAvatar()).into(holder.cardImage);
         holder.cardName.setText(cardsList.get(position).getCardName());
         holder.category.setText(cardsList.get(position).getCategory());
         holder.parentLayout.setOnClickListener(new View.OnClickListener() {
@@ -88,7 +89,7 @@ public class CardRecyclerAdapter  extends RecyclerView.Adapter<CardRecyclerAdapt
             public void onClick(View v) {
                 Intent intent = new Intent(mContext, DetailCardActivity.class);
                 Card detailCard = cardsList.get(position);
-                intent.putExtra("data", detailCard);
+                intent.putExtra(DATA_CARD, detailCard);
                 mContext.startActivity(intent);
             }
         });

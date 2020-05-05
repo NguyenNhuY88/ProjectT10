@@ -94,11 +94,11 @@ public class Card implements Serializable {
         this.category = category;
     }
 
-    public String getcardAvatar() {
+    public String getCardAvatar() {
         return cardAvatar;
     }
 
-    public void setcardAvatar(String cardAvatar) {
+    public void setCardAvatar(String cardAvatar) {
         this.cardAvatar = cardAvatar;
     }
 
@@ -110,13 +110,14 @@ public class Card implements Serializable {
         this.note = note;
     }
 
-    public boolean isFavorite() {
+    public boolean getIsFavorite() {
         return isFavorite;
     }
 
-    public void setFavorite(boolean favorite) {
+    public void setIsFavorite(boolean favorite) {
         isFavorite = favorite;
     }
+
 
     @Exclude
     public Map<String, Object> toMap() {

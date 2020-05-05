@@ -11,7 +11,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".view.CreateCardActivity"></activity>
+        <activity android:name=".view.EditCardActivity"></activity>
+        <activity android:name=".view.CreateOtherCardActivity" />
+        <activity android:name=".view.CardSuggestActivity" />
+        <activity android:name=".view.CreateCardActivity" />
         <activity android:name=".view.SignupActivity" />
         <activity android:name=".view.ResetPasswordActivity" />
         <activity android:name=".view.LoginActivity">
@@ -31,7 +34,7 @@
             android:label="Mã Thẻ" />
         <activity
             android:name=".MainActivity"
-            android:label="@string/app_name"></activity>
+            android:label="@string/app_name" />
     </application>
 
 </manifest>
