@@ -13,25 +13,29 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import ss.projectt10.model.Account;
+import ss.projectt10.model.User;
 
-public class PersonalUpdateActivity extends AppCompatActivity {
-    private TextView accountId, fullName, dateOfBirth, address, email, phoneNumber, company;
+import static ss.projectt10.BaseActivity.DBPROJECTNAME;
+import static ss.projectt10.BaseActivity.DBUSER;
+
+public class PersonalUpdateActivity extends BaseActivity {
+
+    private TextView accountEmail, fullName, dateOfBirth, address,  phoneNumber ;
     private Button btnUpdate;
 
-    private Account myAcc;
+    private User myAcc;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_personal_update);
 
-        accountId = findViewById(R.id.ac_personal_update_accountId);
+        accountEmail = findViewById(R.id.ac_personal_update_accountId);
         fullName = findViewById(R.id.ac_personal_update_fullName);
         dateOfBirth = findViewById(R.id.ac_personal_update_dateOfBirth);
         address = findViewById(R.id.ac_personal_update_address);
-        email = findViewById(R.id.ac_personal_update_Email);
         phoneNumber = findViewById(R.id.ac_personal_update_phoneNumber);
-        company = findViewById(R.id.ac_personal_update_company);
+
 
         btnUpdate = findViewById(R.id.ac_personal_update_btnAccept);
         btnUpdate.setOnClickListener(new View.OnClickListener() {
@@ -47,36 +51,33 @@ public class PersonalUpdateActivity extends AppCompatActivity {
 
     private void loadDataAccount() {
         Intent intent = getIntent();
-        myAcc = (Account) intent.getSerializableExtra("data");
+        myAcc = (User) intent.getSerializableExtra("data");
         if (myAcc != null) {
-            accountId.setText(myAcc.getAccountId());
-            fullName.setText(myAcc.getFullName());
+            accountEmail.setText(myAcc.getEmail());
+            fullName.setText(myAcc.getUsername());
             dateOfBirth.setText(myAcc.getDateOfBirth());
             address.setText(myAcc.getAddress());
-            email.setText(myAcc.getEmail());
             phoneNumber.setText(myAcc.getPhoneNumber());
-            company.setText(myAcc.getCompany());
         } else {
             Toast.makeText(this, "Không có dữ liệu", Toast.LENGTH_SHORT).show();
         }
     }
 
     private void updateDataAccount() {
-        DatabaseReference database = FirebaseDatabase.getInstance().getReference("account");
+        DatabaseReference  mDatabase = FirebaseDatabase.getInstance().getReference();
+//        = ;
+       // DatabaseReference database = FirebaseDatabase.getInstance().getReference("account");
         String name = fullName.getText().toString();
         String dateBirth = dateOfBirth.getText().toString();
         String add = address.getText().toString();
-        String mail = email.getText().toString();
         String phone = phoneNumber.getText().toString();
-        String com = company.getText().toString();
 
-        myAcc.setFullName(name);
+
+        myAcc.setUsername(name);
         myAcc.setDateOfBirth(dateBirth);
         myAcc.setAddress(add);
-        myAcc.setEmail(mail);
         myAcc.setPhoneNumber(phone);
-        myAcc.setCompany(com);
 
-        database.child("MASON").setValue(myAcc);
+        mDatabase.child(DBPROJECTNAME).child(DBUSER).child(getUid()).setValue(myAcc);
     }
 }

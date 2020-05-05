@@ -2,7 +2,6 @@ package ss.projectt10.view;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,7 +10,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -26,7 +24,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import ss.projectt10.BaseActivity;
 import ss.projectt10.HomeActivity;
 import ss.projectt10.R;
-import ss.projectt10.model.Account;
 import ss.projectt10.model.User;
 
 
@@ -105,7 +102,7 @@ public class SignupActivity extends BaseActivity {
         finish();
     }
     private void writeNewUser(String userId, String username, String email) {
-        final User user = new User(username, email, null);
+        final User user = new User(username, email, "", "", "", "");
 
         mDatabase.child(DBPROJECTNAME).child(DBUSER).child(userId).setValue(user, new DatabaseReference.CompletionListener() {
             @Override

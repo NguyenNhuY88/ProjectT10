@@ -5,6 +5,7 @@ import androidx.annotation.Nullable;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -103,6 +104,7 @@ public class CreateCardActivity extends BaseActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot child : dataSnapshot.getChildren()) {
                     Category category = child.getValue(Category.class);
+
                     categoryList.add(category);
                 }
                 mSuggestCardSpiner.setAdapter(adapter);

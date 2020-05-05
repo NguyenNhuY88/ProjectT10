@@ -1,9 +1,31 @@
 package ss.projectt10.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Category {
     private String nameCard;
     private String imageIcon;
     private String cardType;
+    private Object location;
+
+//    public Object getLocation() {
+//        return location;
+//    }
+//
+//    public void setLocation(Object location) {
+//        this.location = location;
+//    }
+    //     List<String> location;
+//    public List<String> getLocation() {
+//        return location;
+//    }
+//
+//    public void setLocation(List<String> location) {
+//        this.location = location;
+//    }
+
+
 
     public Category() {
     }
