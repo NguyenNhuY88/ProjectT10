@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="@dimen/activity_vertical_margin"
+    android:orientation="vertical"
+    tools:context=".view.CreateOtherCardActivity">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/iv_card_image_edit"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_gravity="center"
+                android:src="@drawable/mycard"/>
+
+            <Button
+                android:id="@+id/btn_add_front_side_card_edit"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center|bottom"
+                android:layout_marginLeft="45dp"
+                android:background="@null"
+                android:drawableRight="@drawable/ic_camera_alt_black_24dp" />
+        </FrameLayout>
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/editext_margin_top"
+        android:text="Nhập tên thẻ " />
+
+    <EditText
+        android:id="@+id/edt_add_card_name_edit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="0dp"
+        android:background="@drawable/search_layout"
+        android:ems="10"
+        android:hint="Tên thẻ"
+        android:inputType="text"
+        android:textColor="#999999"
+        android:textSize="14sp" />
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/editext_margin_top"
+        android:text="Ghi chú" />
+
+    <EditText
+        android:id="@+id/edt_add_card_note_edit"
+        android:textStyle="normal"
+        android:layout_width="match_parent"
+        android:layout_height="97dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="0dp"
+        android:background="@drawable/search_layout"
+        android:ems="10"
+        android:hint="Ghi chú"
+        android:inputType="text"
+        android:paddingLeft="20dp"
+        android:paddingTop="10dp"
+        android:paddingRight="20dp"
+        android:paddingBottom="10dp"
+        android:textColor="#999999"
+        android:textSize="16sp"/>
+
+    <LinearLayout
+        android:layout_width="365dp"
+        android:layout_height="61dp"
+        android:layout_margin="@dimen/padd_10"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <CheckBox
+            android:id="@+id/cb_favorite_other_card_edit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Thêm vào thẻ yêu thích" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/btn_save_other_card_edit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="100dp"
+            android:background="@null"
+            android:drawableLeft="@drawable/ic_check_black_24dp"
+            android:text="Lưu" />
+
+        <Button
+            android:id="@+id/btn_cancel_other_card_edit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="40dp"
+            android:background="@null"
+            android:drawableLeft="@drawable/ic_clear_black_24dp"
+            android:text="Hủy bỏ" />
+    </LinearLayout>
+
+
+
+</LinearLayout>

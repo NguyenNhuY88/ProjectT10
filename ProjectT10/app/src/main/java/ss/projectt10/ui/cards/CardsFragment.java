@@ -31,13 +31,12 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.Map;
 
-import ss.projectt10.BaseActivity;
 import ss.projectt10.MainActivity;
 import ss.projectt10.R;
 import ss.projectt10.adapter.CardRecyclerAdapter;
 import ss.projectt10.helper.RecyclerItemTouchHelper;
 import ss.projectt10.model.Card;
-import ss.projectt10.view.CreateCardActivity;
+import ss.projectt10.view.CardSuggestActivity;
 
 
 import static ss.projectt10.BaseActivity.DBPROJECTNAME;
@@ -81,8 +80,8 @@ public class CardsFragment extends Fragment  implements RecyclerItemTouchHelper.
         btnAddNewCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-           //     Intent intent = new Intent(getContext(), CreateCard.class);
-                Intent intent = new Intent(getContext(), CreateCardActivity.class);
+               Intent intent = new Intent(getContext(), CardSuggestActivity.class);
+             //   Intent intent = new Intent(getContext(), CreateCardActivity.class);
                 startActivity(intent);
             }
         });
@@ -118,7 +117,12 @@ public class CardsFragment extends Fragment  implements RecyclerItemTouchHelper.
                 for (DataSnapshot child : dataSnapshot.getChildren()) {
                     Card card = child.getValue(Card.class);
                     cardsList.add(card);
-                    Log.i("CARD", card.getCardName());
+                    if (card.getIsFavorite()==true) {
+                        Log.i("CBOX", "true");
+                    } else  {
+                        Log.i("CBOX", "false");
+                    }
+
                 }
 
                 recyclerAdapterCard = new CardRecyclerAdapter(getContext(), cardsList);

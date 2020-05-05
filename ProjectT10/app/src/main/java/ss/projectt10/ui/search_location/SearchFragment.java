@@ -1,16 +1,14 @@
 package ss.projectt10.ui.search_location;
 
-import androidx.lifecycle.ViewModelProviders;
-
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,7 +22,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -41,19 +39,20 @@ import ss.projectt10.adapter.CardSuggestRecyclerAdapter;
 import ss.projectt10.model.Card;
 import ss.projectt10.model.Category;
 
+import static ss.projectt10.BaseActivity.DBPROJECTNAME;
+import static ss.projectt10.BaseActivity.DBUSER_CARD;
+
 public class SearchFragment extends Fragment {
+    private FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     private final String TAT_CA = "Tất cả";
     private final String uId = FirebaseAuth.getInstance().getCurrentUser().getUid();
     private SearchView searchCardSuggest;
     private RecyclerView recyclerViewCard;
-    private CardSuggestRecyclerAdapter recyclerAdapterCardSuggest;
-    private ArrayList<Category> cardsListSuggest;
-    private Button mAddOtherCardButton;
-    private FrameLayout frameLayout;
+    private CardRecyclerAdapter recyclerAdapterCard;
+    private ArrayList<Card> cardsList;
+
     private View cardsSuggestView;
-    private Spinner mLocationSpiner;
     private DatabaseReference mDatabase;
-    private String locationChoosen;
     private SearchView getSearchCardSuggest;
 
     public static SearchFragment newInstance() {
@@ -63,7 +62,7 @@ public class SearchFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        cardsSuggestView = inflater.inflate(R.layout.fragment_search, container, false);
+        cardsSuggestView = inflater.inflate(R.layout.fragment_favorite, container, false);
         return cardsSuggestView;
     }
 
@@ -71,7 +70,7 @@ public class SearchFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         init();
-        initSpiner();
+        QueryCardsSuggest();
 
         getSearchCardSuggest.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -81,61 +80,29 @@ public class SearchFragment extends Fragment {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                recyclerAdapterCardSuggest.getFilter().filter(newText);
+                recyclerAdapterCard.getFilter().filter(newText);
                 return true;
             }
         });
 
     }
 
-    private void initSpiner() {
-        mLocationSpiner = (Spinner) cardsSuggestView.findViewById(R.id.spnCategory);
-        TextView tv = (TextView) cardsSuggestView.findViewById(R.id.heading_label);
-        List<String> list = new ArrayList<>();
-        list.add(TAT_CA);
-        list.add("Hà Nội");
-        list.add("TP HCM");
-        list.add("Đà Nẵng");
-
-
-        ArrayAdapter<String> adapter = new ArrayAdapter(cardsSuggestView.getContext(), android.R.layout.simple_spinner_item, list);
-        adapter.setDropDownViewResource(android.R.layout.simple_list_item_single_choice);
-        mLocationSpiner.setAdapter(adapter);
-        mLocationSpiner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                locationChoosen = mLocationSpiner.getSelectedItem().toString();
-                QueryCardsSuggest(locationChoosen);
-               // QueryCardsSuggest(locationChoosen);
-                Toast.makeText(cardsSuggestView.getContext(), locationChoosen, Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
-    }
-
-    private void QueryCardsSuggest(String location) {
+    private void QueryCardsSuggest() {
         Query myCategoryQuery = null;
-        if(location.equals(TAT_CA)) {
-            myCategoryQuery = mDatabase.child("caterory");
-        } else {
-            myCategoryQuery = mDatabase.child("caterory").orderByChild("location/" + location)
-                    .equalTo(true);
-        }
+        myCategoryQuery =  mDatabase.child(DBPROJECTNAME).child(DBUSER_CARD).child(user.getUid())
+                .orderByChild("isFavorite").equalTo(true);
+
         myCategoryQuery.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                cardsListSuggest.clear();
+                cardsList.clear();
                 for (DataSnapshot child : dataSnapshot.getChildren()) {
-                    Category category = child.getValue(Category.class);
-                    cardsListSuggest.add(category);
+                    Card card = child.getValue(Card.class);
+                    cardsList.add(card);
                 }
-                recyclerAdapterCardSuggest = new CardSuggestRecyclerAdapter(getContext(), cardsListSuggest);
-                recyclerViewCard.setLayoutManager(new LinearLayoutManager(getContext()));
-                recyclerViewCard.setAdapter(recyclerAdapterCardSuggest);
+                recyclerAdapterCard = new CardRecyclerAdapter(getContext(), cardsList);
+                recyclerViewCard.setLayoutManager(new GridLayoutManager(getContext(),2));
+                recyclerViewCard.setAdapter(recyclerAdapterCard);
             }
 
             @Override
@@ -150,11 +117,10 @@ public class SearchFragment extends Fragment {
     private void init() {
         mDatabase = FirebaseDatabase.getInstance().getReference();
         searchCardSuggest = cardsSuggestView.findViewById(R.id.search_field);
-        mAddOtherCardButton = (Button) cardsSuggestView.findViewById(R.id.btn_add_other_card);
 
-        recyclerViewCard = cardsSuggestView.findViewById(R.id.result_list);
-        getSearchCardSuggest = cardsSuggestView.findViewById(R.id.search_field);
-        cardsListSuggest = new ArrayList<>();
+        recyclerViewCard = cardsSuggestView.findViewById(R.id.rc_favorite_list);
+        getSearchCardSuggest = cardsSuggestView.findViewById(R.id.sv_favorite_search_field);
+        cardsList = new ArrayList<>();
 
     }
 

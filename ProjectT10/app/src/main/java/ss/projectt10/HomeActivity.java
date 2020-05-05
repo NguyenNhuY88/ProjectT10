@@ -52,10 +52,10 @@ public class HomeActivity extends AppCompatActivity {
                 startActivity(new Intent(this, LoginActivity.class));
                 finish();
                 return true;
-            case R.id.action_changPassword:
-                Intent intent = new Intent(this, ChangePasswordActivity.class);
-                startActivity(intent);
-                return true;
+//            case R.id.action_changPassword:
+//                Intent intent = new Intent(this, ChangePasswordActivity.class);
+//                startActivity(intent);
+//                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
