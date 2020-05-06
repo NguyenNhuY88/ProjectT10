@@ -154,8 +154,8 @@ public class CardsFragment extends Fragment  implements RecyclerItemTouchHelper.
 
             // showing snack bar with Undo option
             Snackbar snackbar = Snackbar
-                    .make(frameLayout, name + " removed from  list card!", Snackbar.LENGTH_LONG);
-            snackbar.setAction("UNDO", new View.OnClickListener() {
+                    .make(frameLayout, name + "đã xóa khỏi danh sách!", Snackbar.LENGTH_LONG);
+            snackbar.setAction("Hoàn tác", new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     AddCardAgain(deletedItem);
