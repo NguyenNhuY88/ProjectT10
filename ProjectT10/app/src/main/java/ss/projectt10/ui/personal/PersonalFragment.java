@@ -3,6 +3,7 @@ package ss.projectt10.ui.personal;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -132,7 +133,9 @@ public class PersonalFragment extends Fragment {
                 if (getActivity() == null) {
                     return;
                 }
+
                 Glide.with(getActivity()).load(url).into(avatar);
+
             }
 
             @Override

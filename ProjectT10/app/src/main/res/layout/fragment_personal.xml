@@ -75,7 +75,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/alfa_slab_one"
-        android:text="TextView"
+        android:text="Tên người dùng"
         android:textColor="#3F51B5"
         android:textSize="18sp"
         android:typeface="normal"

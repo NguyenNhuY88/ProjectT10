@@ -26,6 +26,8 @@ import ss.projectt10.HomeActivity;
 import ss.projectt10.R;
 import ss.projectt10.model.User;
 
+import static ss.projectt10.helper.Util.AVATAR_DEFAULT;
+
 
 public class SignupActivity extends BaseActivity {
     private EditText mEmailField, mPasswordField, mUserNameField;
@@ -102,14 +104,15 @@ public class SignupActivity extends BaseActivity {
         finish();
     }
     private void writeNewUser(String userId, String username, String email) {
-        final User user = new User(username, email, "", "", "", "");
+        final User user = new User(username, email, AVATAR_DEFAULT, "", "", "");
 
         mDatabase.child(DBPROJECTNAME).child(DBUSER).child(userId).setValue(user, new DatabaseReference.CompletionListener() {
             @Override
             public void onComplete(@Nullable DatabaseError databaseError, @NonNull DatabaseReference databaseReference) {
-                Toast.makeText(SignupActivity.this, "luu user thanh cong", Toast.LENGTH_LONG);
+                Toast.makeText(SignupActivity.this, "tạo tài khoản thành công", Toast.LENGTH_LONG);
                 Log.i("TAOUSER", user.getUsername());
             }
+
         });
     }
     // [END basic_write]

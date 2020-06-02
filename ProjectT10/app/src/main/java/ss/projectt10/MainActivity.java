@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void logIn() {
-        Intent intent = new Intent(this, HomeActivity.class);
+        Intent intent = new Intent(this, ss.projectt10.HomeActivity.class);
         startActivity(intent);
     }
 }

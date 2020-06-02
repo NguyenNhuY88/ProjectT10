@@ -32,6 +32,8 @@ import ss.projectt10.R;
 import ss.projectt10.adapter.CardSuggestRecyclerAdapter;
 import ss.projectt10.model.Category;
 
+import static ss.projectt10.helper.Util.CATEGORY;
+
 public class CardSuggestActivity extends AppCompatActivity {
     private final String TAT_CA = "Tất cả";
     private final String uId = FirebaseAuth.getInstance().getCurrentUser().getUid();
@@ -108,9 +110,9 @@ public class CardSuggestActivity extends AppCompatActivity {
     private void QueryCardsSuggest(String location) {
         Query myCategoryQuery = null;
         if(location.equals(TAT_CA)) {
-            myCategoryQuery = mDatabase.child("caterory");
+            myCategoryQuery = mDatabase.child(CATEGORY);
         } else {
-            myCategoryQuery = mDatabase.child("caterory").orderByChild("location/" + location)
+            myCategoryQuery = mDatabase.child(CATEGORY).orderByChild("location/" + location)
                     .equalTo(true);
         }
         myCategoryQuery.addValueEventListener(new ValueEventListener() {
