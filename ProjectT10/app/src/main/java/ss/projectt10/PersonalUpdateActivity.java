@@ -17,7 +17,7 @@ import ss.projectt10.model.User;
 
 import static ss.projectt10.BaseActivity.DBPROJECTNAME;
 import static ss.projectt10.BaseActivity.DBUSER;
-
+import ss.projectt10.BaseActivity;
 public class PersonalUpdateActivity extends BaseActivity {
 
     private TextView accountEmail, fullName, dateOfBirth, address,  phoneNumber ;
@@ -65,8 +65,6 @@ public class PersonalUpdateActivity extends BaseActivity {
 
     private void updateDataAccount() {
         DatabaseReference  mDatabase = FirebaseDatabase.getInstance().getReference();
-//        = ;
-       // DatabaseReference database = FirebaseDatabase.getInstance().getReference("account");
         String name = fullName.getText().toString();
         String dateBirth = dateOfBirth.getText().toString();
         String add = address.getText().toString();

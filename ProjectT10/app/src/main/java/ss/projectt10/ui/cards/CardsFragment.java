@@ -6,6 +6,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -19,6 +20,7 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.SearchView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -47,14 +49,14 @@ public class CardsFragment extends Fragment  implements RecyclerItemTouchHelper.
     private View cardsView;
 
     private DatabaseReference database;
-    private Button btnAddNewCard;
+    private FloatingActionButton btnAddNewCard;
     private SearchView searchCard;
     private FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
     private RecyclerView recyclerViewCard;
     private CardRecyclerAdapter recyclerAdapterCard;
     private ArrayList<Card> cardsList;
-    private FrameLayout frameLayout;
+    private CoordinatorLayout frameLayout;
 
     public static CardsFragment newInstance() {
         return new CardsFragment();

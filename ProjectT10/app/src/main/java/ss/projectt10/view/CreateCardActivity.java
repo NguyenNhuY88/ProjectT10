@@ -21,12 +21,14 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.zxing.Result;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
 import java.util.ArrayList;
 import java.util.Map;
 
+import me.dm7.barcodescanner.zxing.ZXingScannerView;
 import ss.projectt10.BaseActivity;
 import ss.projectt10.R;
 import ss.projectt10.model.Category;
@@ -35,7 +37,7 @@ import ss.projectt10.ui.category.CategorySpinnerAdapter;
 
 import static ss.projectt10.helper.Util.DATA_CATEGORY;
 
-public class CreateCardActivity extends BaseActivity {
+public class CreateCardActivity extends BaseActivity  {
     private Spinner mSuggestCardSpiner;
 
     private DatabaseReference mDatabase;
@@ -46,6 +48,9 @@ public class CreateCardActivity extends BaseActivity {
     private String mCodeType, mCardAvatar, mCardName, mCardCode, mCategory, mNote;
     private Boolean mIsFavoriteCard;
     private EditText mNoteField;
+
+    private static final int REQUEST_CAMERA = 1;
+    private ZXingScannerView mScannerView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,6 +63,7 @@ public class CreateCardActivity extends BaseActivity {
         mScanButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 scanImageCode();
             }
         });
@@ -65,7 +71,8 @@ public class CreateCardActivity extends BaseActivity {
         mAcceptButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                submitCard();
+
+               submitCard();
             }
         });
 
@@ -88,6 +95,8 @@ public class CreateCardActivity extends BaseActivity {
         mBarcodeImage = findViewById(R.id.iv_new_barcode);
         setProgressBar(R.id.pb_add_card);
         mNoteField = findViewById(R.id.edt_add_card_note);
+
+
     }
 
     private void getCardSuggestInfo(){
@@ -110,6 +119,7 @@ public class CreateCardActivity extends BaseActivity {
         intent.setCameraId(0);
         intent.initiateScan();
     }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -153,4 +163,6 @@ public class CreateCardActivity extends BaseActivity {
            hideProgressBar();
         }
     }
+
+
 }

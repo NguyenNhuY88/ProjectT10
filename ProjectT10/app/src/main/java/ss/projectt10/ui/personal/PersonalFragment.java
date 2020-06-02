@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,6 +33,11 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.vansuita.pickimage.bean.PickResult;
+import com.vansuita.pickimage.bundle.PickSetup;
+import com.vansuita.pickimage.dialog.PickImageDialog;
+import com.vansuita.pickimage.listeners.IPickCancel;
+import com.vansuita.pickimage.listeners.IPickResult;
 
 import ss.projectt10.PersonalUpdateActivity;
 import ss.projectt10.R;
@@ -98,8 +104,8 @@ public class PersonalFragment extends Fragment {
                 updatePersonalData();
             }
         });
-        btnChangeImage = personalView.findViewById(R.id.fr_personal_btnChangeImage);
-        btnChangeImage.setOnClickListener(new View.OnClickListener() {
+//        btnChangeImage = personalView.findViewById(R.id.fr_personal_btnChangeImage);
+        avatar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 chooseImage();
@@ -123,7 +129,9 @@ public class PersonalFragment extends Fragment {
                     phoneNumber.setText(myAcc.getPhoneNumber());
 
                 String url = myAcc.getAvatar();
-
+                if (getActivity() == null) {
+                    return;
+                }
                 Glide.with(getActivity()).load(url).into(avatar);
             }
 
@@ -148,24 +156,42 @@ public class PersonalFragment extends Fragment {
 
     //click choose image and Update
     private void chooseImage() {
-        Intent intent = new Intent();
-        intent.setType("image/*");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(intent, REQUES_CHANGE_AVATAR);
+//        Intent intent = new Intent();
+//        intent.setType("image/*");
+//        intent.setAction(Intent.ACTION_GET_CONTENT);
+//        startActivityForResult(intent, REQUES_CHANGE_AVATAR);
+
+        PickSetup setup = new PickSetup().setSystemDialog(true).setTitle("Chọn ảnh");
+
+        PickImageDialog.build(setup)
+                .setOnPickResult(new IPickResult() {
+                    @Override
+                    public void onPickResult(PickResult r) {
+                        uri =  r.getUri();
+                        avatar.setImageBitmap(r.getBitmap());
+                        upLoadImage();
+                    }
+                })
+                .setOnPickCancel(new IPickCancel() {
+                    @Override
+                    public void onCancelClick() {
+                        return;
+                    }
+                }).show(getActivity());
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == REQUES_CHANGE_AVATAR && resultCode == RESULT_OK && data != null && data.getData() != null) {
-            uri = data.getData();
-            Glide.with(this).load(uri).into(avatar);
-            avatar.setImageURI(uri);
-
-            upLoadImage();
-        }
-    }
+//    @Override
+//    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//
+//        if (requestCode == REQUES_CHANGE_AVATAR && resultCode == RESULT_OK && data != null && data.getData() != null) {
+//            uri = data.getData();
+//            Glide.with(this).load(uri).into(avatar);
+//            avatar.setImageURI(uri);
+//
+//            upLoadImage();
+//        }
+//    }
 
     private void upLoadImage() {
         final StorageReference imageReference = storage.child("PROJECTT10").child(uId).child("avatar.jpg");
@@ -184,6 +210,7 @@ public class PersonalFragment extends Fragment {
             public void onComplete(@NonNull Task<Uri> task) {
                 if (task.isSuccessful()) {
                     Uri downloadUri = task.getResult();
+                    Log.i("LINKANH", downloadUri.toString());
                     database.child(DBPROJECTNAME).child(DBUSER).child(uId).child("avatar").setValue(downloadUri.toString());
                 } else {
                     Toast.makeText(getActivity(), "Có lỗi!!!", Toast.LENGTH_SHORT).show();

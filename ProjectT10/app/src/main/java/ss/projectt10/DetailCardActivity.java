@@ -6,11 +6,13 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.EncodeHintType;
 import com.google.zxing.MultiFormatWriter;
@@ -27,7 +29,7 @@ import static ss.projectt10.helper.Util.DATA_CARD_UPDATE;
 import static ss.projectt10.helper.Util.DATA_CATEGORY;
 
 public class DetailCardActivity extends AppCompatActivity {
-    private ImageView codeImage;
+    private ImageView codeImage, cardCoverImage;
     private TextView code, mCardName, mCardNote;
     private Card card;
 
@@ -37,6 +39,7 @@ public class DetailCardActivity extends AppCompatActivity {
         setContentView(R.layout.activity_detail_card);
 
         codeImage = findViewById(R.id.ac_detail_card_codeImage);
+        cardCoverImage = findViewById(R.id.iv_card_image_detail);
         code = findViewById(R.id.ac_detail_card_code);
         mCardName = (TextView) findViewById(R.id.tv_card_name_detail);
         mCardNote = (TextView) findViewById(R.id.tv_card_note_detail);
@@ -50,6 +53,8 @@ public class DetailCardActivity extends AppCompatActivity {
             code.setText(key);
             mCardName.setText(card.getCardName());
             mCardNote.setText(card.getNote());
+            Log.i("AB", card.getCardAvatar());
+           Glide.with(DetailCardActivity.this).load(card.getCardAvatar()).into(cardCoverImage);
             try {
                 Hashtable<EncodeHintType, ErrorCorrectionLevel> hintMap = new Hashtable<EncodeHintType, ErrorCorrectionLevel>();
                 hintMap.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.L);
