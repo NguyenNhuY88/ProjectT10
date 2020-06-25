@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
 import ss.projectt10.adapter.CardRecyclerAdapter;
+import ss.projectt10.adapter.HistoryAdapter;
 
 public class RecyclerItemTouchHelper extends ItemTouchHelper.SimpleCallback {
     private RecyclerItemTouchHelperListener listener;
@@ -24,7 +25,12 @@ public class RecyclerItemTouchHelper extends ItemTouchHelper.SimpleCallback {
     @Override
     public void onSelectedChanged(RecyclerView.ViewHolder viewHolder, int actionState) {
         if (viewHolder != null) {
-            final View foregroundView = ((CardRecyclerAdapter.MyViewHolder) viewHolder).viewForeground;
+            View foregroundView = null;
+            if ( viewHolder instanceof CardRecyclerAdapter.MyViewHolder) {
+                foregroundView = ((CardRecyclerAdapter.MyViewHolder) viewHolder).viewForeground;
+            } else if ( viewHolder instanceof HistoryAdapter.HistoryViewHolder) {
+                foregroundView = ((HistoryAdapter.HistoryViewHolder) viewHolder).viewForeground;
+            }
 
             getDefaultUIUtil().onSelected(foregroundView);
         }
@@ -34,14 +40,27 @@ public class RecyclerItemTouchHelper extends ItemTouchHelper.SimpleCallback {
     public void onChildDrawOver(Canvas c, RecyclerView recyclerView,
                                 RecyclerView.ViewHolder viewHolder, float dX, float dY,
                                 int actionState, boolean isCurrentlyActive) {
-        final View foregroundView = ((CardRecyclerAdapter.MyViewHolder) viewHolder).viewForeground;
+        View foregroundView = null;
+        if ( viewHolder instanceof CardRecyclerAdapter.MyViewHolder) {
+            foregroundView = ((CardRecyclerAdapter.MyViewHolder) viewHolder).viewForeground;
+        } else if ( viewHolder instanceof HistoryAdapter.HistoryViewHolder) {
+            foregroundView = ((HistoryAdapter.HistoryViewHolder) viewHolder).viewForeground;
+        }
+
         getDefaultUIUtil().onDrawOver(c, recyclerView, foregroundView, dX, dY,
                 actionState, isCurrentlyActive);
     }
 
     @Override
     public void clearView(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
-        final View foregroundView = ((CardRecyclerAdapter.MyViewHolder) viewHolder).viewForeground;
+      //  final View foregroundView = ((CardRecyclerAdapter.MyViewHolder) viewHolder).viewForeground;
+        View foregroundView = null;
+        if ( viewHolder instanceof CardRecyclerAdapter.MyViewHolder) {
+            foregroundView = ((CardRecyclerAdapter.MyViewHolder) viewHolder).viewForeground;
+        } else if ( viewHolder instanceof HistoryAdapter.HistoryViewHolder) {
+            foregroundView = ((HistoryAdapter.HistoryViewHolder) viewHolder).viewForeground;
+        }
+
         getDefaultUIUtil().clearView(foregroundView);
     }
 
@@ -49,8 +68,13 @@ public class RecyclerItemTouchHelper extends ItemTouchHelper.SimpleCallback {
     public void onChildDraw(Canvas c, RecyclerView recyclerView,
                             RecyclerView.ViewHolder viewHolder, float dX, float dY,
                             int actionState, boolean isCurrentlyActive) {
-        final View foregroundView = ((CardRecyclerAdapter.MyViewHolder) viewHolder).viewForeground;
-
+        //final View foregroundView = ((CardRecyclerAdapter.MyViewHolder) viewHolder).viewForeground;
+        View foregroundView = null;
+        if ( viewHolder instanceof CardRecyclerAdapter.MyViewHolder) {
+            foregroundView = ((CardRecyclerAdapter.MyViewHolder) viewHolder).viewForeground;
+        } else if ( viewHolder instanceof HistoryAdapter.HistoryViewHolder) {
+            foregroundView = ((HistoryAdapter.HistoryViewHolder) viewHolder).viewForeground;
+        }
         getDefaultUIUtil().onDraw(c, recyclerView, foregroundView, dX, dY,
                 actionState, isCurrentlyActive);
     }

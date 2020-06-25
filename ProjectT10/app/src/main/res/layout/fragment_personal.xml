@@ -41,7 +41,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:text="TextView"
                 app:layout_constraintStart_toEndOf="@+id/textView5"
                 app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -51,11 +50,11 @@
         android:id="@+id/imageView"
         android:layout_width="432dp"
         android:layout_height="123dp"
+        android:background="@color/colorAccent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/bacround_gradient" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/fr_personal_avatar"
@@ -74,7 +73,7 @@
         android:id="@+id/fr_personal_fullName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/alfa_slab_one"
+        android:fontFamily="@font/nunito_semibold"
         android:text="Tên người dùng"
         android:textColor="#3F51B5"
         android:textSize="18sp"
@@ -92,7 +91,7 @@
         android:id="@+id/fr_personal_dateOfBirth"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/alfa_slab_one"
+        android:fontFamily="@font/nunito_semibold"
         android:text="TextView"
         android:textColor="#3F51B5"
         android:textSize="14sp"
@@ -131,6 +130,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textStyle="bold"
                 android:text="  Hòm thư: " />
 
             <TextView
@@ -165,6 +165,7 @@
 
             <TextView
                 android:layout_width="wrap_content"
+                android:textStyle="bold"
                 android:layout_height="wrap_content"
                 android:text="Địa chỉ:  "/>
 
@@ -201,6 +202,7 @@
                 android:src="@drawable/ic_smartphone_black_24dp" />
             <TextView
                 android:layout_width="wrap_content"
+                android:textStyle="bold"
                 android:layout_height="wrap_content"
                 android:text="Điện thoại: "/>
             <TextView
@@ -217,10 +219,10 @@
         android:layout_width="197dp"
         android:layout_height="32dp"
         android:layout_marginBottom="56dp"
-        android:background="#2196F3"
+        android:background="@color/colorPrimary"
         android:gravity="center"
         android:text="Cập nhật thông tin"
-        android:textColor="#0E0E0E"
+        android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

@@ -4,15 +4,23 @@
         android:id="@+id/navigation_personal"
         android:icon="@drawable/ic_person_black_24dp"
         android:title="@string/title_personal" />
-
+    <item
+        android:id="@+id/navigation_history"
+        android:icon="@drawable/ic_history_black_24dp"
+        android:title="@string/history" />
     <item
         android:id="@+id/navigation_cards"
         android:icon="@drawable/ic_home_black_24dp"
         android:title="@string/title_cards" />
-    
+
     <item
-        android:id="@+id/navigation_search"
+        android:id="@+id/navigation_scan_qrcode"
+        android:icon="@drawable/ic_settings_overscan_black_24dp"
+        android:title="@string/scan_qr_code" />
+    <item
+        android:id="@+id/navigation_favorite"
         android:icon="@drawable/ic_favorite_black_24dp"
         android:title="@string/title_search" />
+
 
 </menu>

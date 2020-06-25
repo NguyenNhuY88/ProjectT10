@@ -23,6 +23,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageMetadata;
 import com.google.firebase.storage.StorageReference;
@@ -42,7 +43,12 @@ public class BaseActivity extends AppCompatActivity  {
     public static final String DBPROJECTNAME = "T10DATABASE";
     public static final String DBUSER = "users";
     public static final String DBUSER_CARD = "user-cards";
-
+    public static final String DBHISTORY    = "history";
+    public static  FirebaseDatabase databaseInstance;
+    public void initGetInstanceFirebase() {
+        databaseInstance = FirebaseDatabase.getInstance();
+        databaseInstance.setPersistenceEnabled(true);
+    }
 
     public String getUid() {
         return FirebaseAuth.getInstance().getCurrentUser().getUid();

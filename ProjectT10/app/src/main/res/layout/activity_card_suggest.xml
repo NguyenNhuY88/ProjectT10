@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:id="@+id/fragment_search_layout"
     android:background="#ffffff"
-    tools:context=".ui.search_location.SearchFragment">
+    tools:context=".ui.favorite.SearchFragment">
 
 
     <TextView
@@ -29,7 +29,7 @@
         android:layout_alignLeft="@+id/heading_label"
         android:layout_marginTop="5dp"
         android:layout_marginRight="20dp"
-        android:background="@drawable/search_layout"
+        android:background="@drawable/circle_corner_layout"
         android:ems="10"
         android:fontFamily="@font/nunito_semibold"
         android:hint="Nhập tên thẻ"
@@ -72,7 +72,8 @@
         android:layout_marginTop="9dp"
         android:layout_marginRight="9dp"
         android:gravity="center"
-        android:text="Chọn thẻ khác " />
+        android:text="Chọn thẻ khác "
+        android:background= "@color/colorAccent"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/result_list"

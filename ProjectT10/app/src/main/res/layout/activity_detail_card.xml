@@ -30,6 +30,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:padding="10dp"
         android:orientation="horizontal">
 
         <com.google.android.material.textview.MaterialTextView
@@ -43,7 +44,7 @@
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/tv_card_name_detail"
             android:layout_width="300dp"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:text="Tên thẻ"
             android:textColor="#3F51B5"
@@ -53,6 +54,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:padding="10dp"
         android:orientation="horizontal">
 
         <com.google.android.material.textview.MaterialTextView

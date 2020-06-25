@@ -43,12 +43,13 @@ import ss.projectt10.view.CardSuggestActivity;
 
 import static ss.projectt10.BaseActivity.DBPROJECTNAME;
 import static ss.projectt10.BaseActivity.DBUSER_CARD;
+import static ss.projectt10.BaseActivity.databaseInstance;
 
 public class CardsFragment extends Fragment  implements RecyclerItemTouchHelper.RecyclerItemTouchHelperListener {
     static final String TAG = MainActivity.class.getSimpleName();
     private View cardsView;
 
-    private DatabaseReference database;
+    private DatabaseReference mDatabaseRef;
     private FloatingActionButton btnAddNewCard;
     private SearchView searchCard;
     private FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
@@ -72,8 +73,13 @@ public class CardsFragment extends Fragment  implements RecyclerItemTouchHelper.
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        // TODO: Use the ViewModel
-        database = FirebaseDatabase.getInstance().getReference();
+
+
+        mDatabaseRef = databaseInstance.getReference();
+        mDatabaseRef.keepSynced(true);
+
+//        mDatabaseRef = FirebaseDatabase.getInstance().getReference();
+//        mDatabaseRef.keepSynced(true);
 
 
         loadListCards();
@@ -83,7 +89,6 @@ public class CardsFragment extends Fragment  implements RecyclerItemTouchHelper.
             @Override
             public void onClick(View v) {
                Intent intent = new Intent(getContext(), CardSuggestActivity.class);
-             //   Intent intent = new Intent(getContext(), CreateCardActivity.class);
                 startActivity(intent);
             }
         });
@@ -111,7 +116,7 @@ public class CardsFragment extends Fragment  implements RecyclerItemTouchHelper.
         recyclerViewCard = cardsView.findViewById(R.id.rcv_card);
         cardsList = new ArrayList<>();
 
-        database.child(DBPROJECTNAME).child(DBUSER_CARD).child(user.getUid()).addValueEventListener(new ValueEventListener() {
+        mDatabaseRef.child(DBPROJECTNAME).child(DBUSER_CARD).child(user.getUid()).addValueEventListener(new ValueEventListener() {
 
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -119,11 +124,11 @@ public class CardsFragment extends Fragment  implements RecyclerItemTouchHelper.
                 for (DataSnapshot child : dataSnapshot.getChildren()) {
                     Card card = child.getValue(Card.class);
                     cardsList.add(card);
-                    if (card.getIsFavorite()==true) {
-                        Log.i("CBOX", "true");
-                    } else  {
-                        Log.i("CBOX", "false");
-                    }
+//                    if (card.getIsFavorite()==true) {
+//                        Log.i("CBOX", "true");
+//                    } else  {
+//                        Log.i("CBOX", "false");
+//                    }
 
                 }
 
@@ -172,10 +177,10 @@ public class CardsFragment extends Fragment  implements RecyclerItemTouchHelper.
     public void AddCardAgain(Card myCard){
 
         Map<String, Object> cardValues = myCard.toMap();
-        database.child(DBPROJECTNAME).child(DBUSER_CARD).child(user.getUid()).child(myCard.getID()).setValue(cardValues);
+        mDatabaseRef.child(DBPROJECTNAME).child(DBUSER_CARD).child(user.getUid()).child(myCard.getID()).setValue(cardValues);
     }
     public void deleteCard(Card myCard){
-        database.child(DBPROJECTNAME).child(DBUSER_CARD).child(user.getUid()).child(myCard.getID()).removeValue();
+        mDatabaseRef.child(DBPROJECTNAME).child(DBUSER_CARD).child(user.getUid()).child(myCard.getID()).removeValue();
 
 
     }

@@ -107,6 +107,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="2dp"
                 android:textAlignment="center"
+                android:inputType="textPhonetic"
                 android:gravity="center"/>
         </LinearLayout>
 

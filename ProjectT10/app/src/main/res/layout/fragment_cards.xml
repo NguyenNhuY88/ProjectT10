@@ -38,5 +38,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|right"
         android:layout_margin="16dp"
+        android:background="@color/colorPrimary"
         android:src="@drawable/ic_plus_24"/>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

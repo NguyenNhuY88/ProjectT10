@@ -17,9 +17,21 @@
         tools:layout="@layout/fragment_cards" />
 
     <fragment
-        android:id="@+id/navigation_search"
-        android:name="ss.projectt10.ui.search_location.SearchFragment"
+        android:id="@+id/navigation_favorite"
+        android:name="ss.projectt10.ui.favorite.SearchFragment"
         android:label="@string/title_search"
         tools:layout="@layout/fragment_favorite" />
+    <fragment
+        android:id="@+id/navigation_history"
+        android:name="ss.projectt10.ui.history.historyFragment"
+        android:label="@string/history"
+        tools:layout="@layout/fragment_history" />
+    <fragment
+        android:id="@+id/navigation_scan_qrcode"
+        android:name="ss.projectt10.ui.scanQRCode.scanQRCode"
+        android:label="@string/scan_qr_code"
+        tools:layout="@layout/fragment_scan_qr_code" />
+
+
 
 </navigation>

@@ -32,6 +32,7 @@ import ss.projectt10.R;
 import ss.projectt10.adapter.CardSuggestRecyclerAdapter;
 import ss.projectt10.model.Category;
 
+import static ss.projectt10.BaseActivity.databaseInstance;
 import static ss.projectt10.helper.Util.CATEGORY;
 
 public class CardSuggestActivity extends AppCompatActivity {
@@ -138,7 +139,8 @@ public class CardSuggestActivity extends AppCompatActivity {
     }
 
     private void init() {
-        mDatabase = FirebaseDatabase.getInstance().getReference();
+        mDatabase = databaseInstance.getReference();
+        mDatabase.keepSynced(true);
         searchCardSuggest = (SearchView) findViewById(R.id.search_field);
         mAddOtherCardButton = (Button) findViewById(R.id.btn_add_other_card);
         recyclerViewCard = (RecyclerView) findViewById(R.id.result_list);

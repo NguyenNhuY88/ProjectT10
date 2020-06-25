@@ -40,7 +40,7 @@ import static ss.projectt10.helper.Util.DATA_CATEGORY;
 public class CreateCardActivity extends BaseActivity  {
     private Spinner mSuggestCardSpiner;
 
-    private DatabaseReference mDatabase;
+    private DatabaseReference mDatabaseRef;
     private Button mScanButton, mAcceptButton, mCancelButton;
     private TextView mCardCodeTextView, mCardNameTextView, mCardTypeTexView;
     private CheckBox mIsFavoriteCheckBox;
@@ -117,6 +117,7 @@ public class CreateCardActivity extends BaseActivity  {
         IntentIntegrator intent = new IntentIntegrator(this);
         intent.setDesiredBarcodeFormats(IntentIntegrator.ALL_CODE_TYPES);
         intent.setCameraId(0);
+        intent.setOrientationLocked(false);
         intent.initiateScan();
     }
 
@@ -146,16 +147,20 @@ public class CreateCardActivity extends BaseActivity  {
         if (mCodeType == null) {
             Toast.makeText(this, "Không có mã thẻ", Toast.LENGTH_SHORT).show();
         } else if (mCardCode != null ) {
-            DatabaseReference database = FirebaseDatabase.getInstance().getReference();
+
+
+        mDatabaseRef = databaseInstance.getReference();
+        mDatabaseRef.keepSynced(true);
+
             String uId = getUid();
-            String id = database.child(DBPROJECTNAME).child(DBUSER_CARD).child(uId).push().getKey();
+            String id = mDatabaseRef.child(DBPROJECTNAME).child(DBUSER_CARD).child(uId).push().getKey();
 
             Card myCard = new Card(id, mCardCode, mCardName, "", "", mCodeType, mCategory, mCardAvatar,mNote , mIsFavoriteCard);
 
             Map<String, Object> cardValues = myCard.toMap();
 
 
-            database.child(DBPROJECTNAME).child(DBUSER_CARD).child(uId).child(id).setValue(cardValues);
+            mDatabaseRef.child(DBPROJECTNAME).child(DBUSER_CARD).child(uId).child(id).setValue(cardValues);
             showProgressBar();
             finish();
         } else {

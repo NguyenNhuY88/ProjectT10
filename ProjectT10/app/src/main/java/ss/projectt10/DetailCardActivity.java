@@ -11,8 +11,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.google.firebase.database.DatabaseReference;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.EncodeHintType;
 import com.google.zxing.MultiFormatWriter;
@@ -20,7 +22,11 @@ import com.google.zxing.Writer;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 
+import java.time.LocalDateTime;
+import java.util.Calendar;
 import java.util.Hashtable;
+import java.util.Map;
+
 import ss.projectt10.model.Card;
 import ss.projectt10.view.EditCardActivity;
 
@@ -28,11 +34,11 @@ import static ss.projectt10.helper.Util.DATA_CARD;
 import static ss.projectt10.helper.Util.DATA_CARD_UPDATE;
 import static ss.projectt10.helper.Util.DATA_CATEGORY;
 
-public class DetailCardActivity extends AppCompatActivity {
+public class DetailCardActivity extends BaseActivity {
     private ImageView codeImage, cardCoverImage;
     private TextView code, mCardName, mCardNote;
     private Card card;
-
+    private DatabaseReference mDatabaseRef;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,6 +53,7 @@ public class DetailCardActivity extends AppCompatActivity {
         Intent intent = getIntent();
        card = (Card) intent.getSerializableExtra(DATA_CARD);
         if (card != null) {
+
             String key = card.getCardCode();
             String codeType = card.getCodeType();
 
@@ -71,9 +78,12 @@ public class DetailCardActivity extends AppCompatActivity {
                     }
                 }
                 codeImage.setImageBitmap(bitmap);
+
             } catch (Exception e) {
                 e.getMessage();
             }
+
+            saveCardHistory(card);
         }
 
     }
@@ -99,6 +109,22 @@ public class DetailCardActivity extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    private void saveCardHistory(Card card) {
+
+            mDatabaseRef = databaseInstance.getReference();
+            mDatabaseRef.keepSynced(true);
+
+            String uId = getUid();
+            String useTimeId = mDatabaseRef.child(DBPROJECTNAME).child(DBHISTORY).child(uId).push().getKey();
+
+             Calendar c = Calendar.getInstance();
+
+            Map<String, Object> cardValues = card.toMap();
+            cardValues.put("useTime",  c.getTimeInMillis());
+            cardValues.put("useTimeID", useTimeId);
+            mDatabaseRef.child(DBPROJECTNAME).child(DBHISTORY).child(uId).child(useTimeId).setValue(cardValues);
     }
 
 }

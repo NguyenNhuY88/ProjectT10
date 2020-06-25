@@ -103,7 +103,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:layout_marginRight="0dp"
-        android:background="@drawable/search_layout"
+        android:background="@drawable/circle_corner_layout"
         android:ems="10"
         android:hint="Tên thẻ"
         android:inputType="text"
@@ -113,6 +113,7 @@
         android:paddingBottom="10dp"
         android:textColor="#999999"
         android:textSize="14sp" />
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -125,7 +126,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:layout_marginRight="0dp"
-        android:background="@drawable/search_layout"
+        android:background="@drawable/circle_corner_layout"
         android:ems="10"
         android:hint="Tên thẻ"
         android:inputType="text"
@@ -148,7 +149,7 @@
         android:layout_height="57dp"
         android:layout_marginTop="5dp"
         android:layout_marginRight="5dp"
-        android:background="@drawable/search_layout"
+        android:background="@drawable/circle_corner_layout"
         android:ems="10"
         android:hint="Ghi chú"
         android:inputType="text"

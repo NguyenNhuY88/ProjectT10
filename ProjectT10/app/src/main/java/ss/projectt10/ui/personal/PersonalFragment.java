@@ -49,6 +49,7 @@ import static android.app.Activity.RESULT_OK;
 import static ss.projectt10.BaseActivity.DBPROJECTNAME;
 import static ss.projectt10.BaseActivity.DBUSER;
 import static ss.projectt10.BaseActivity.DBUSER_CARD;
+import static ss.projectt10.BaseActivity.databaseInstance;
 
 public class PersonalFragment extends Fragment {
     private final int REQUES_CHANGE_AVATAR = 13579;
@@ -61,7 +62,7 @@ public class PersonalFragment extends Fragment {
     private TextView numberOfCard;
     private Button btnUpdate, btnChangeImage;
 
-    private DatabaseReference database;
+    private DatabaseReference mDatabaseRef;
     private StorageReference storage;
 
     private Uri uri;
@@ -95,7 +96,11 @@ public class PersonalFragment extends Fragment {
 
         numberOfCard = personalView.findViewById(R.id.fr_personal_numberOfCard);
 
-        database = FirebaseDatabase.getInstance().getReference();
+
+        mDatabaseRef = databaseInstance.getReference();
+        mDatabaseRef.keepSynced(true);
+//        mDatabaseRef = FirebaseDatabase.getInstance().getReference();
+//        mDatabaseRef.keepSynced(true);
         storage = FirebaseStorage.getInstance().getReference();
 
         btnUpdate = personalView.findViewById(R.id.fr_personal_btnUpdate);
@@ -118,7 +123,7 @@ public class PersonalFragment extends Fragment {
     }
 
     private void loadDataPersonal() {
-        database.child(DBPROJECTNAME).child(DBUSER).child(uId).addValueEventListener(new ValueEventListener() {
+        mDatabaseRef.child(DBPROJECTNAME).child(DBUSER).child(uId).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 myAcc = dataSnapshot.getValue(User.class);
@@ -144,7 +149,7 @@ public class PersonalFragment extends Fragment {
             }
         });
 
-        database.child(DBPROJECTNAME).child(DBUSER_CARD).child(uId).addValueEventListener(new ValueEventListener() {
+        mDatabaseRef.child(DBPROJECTNAME).child(DBUSER_CARD).child(uId).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 numberOfCard.setText("" +dataSnapshot.getChildrenCount());
@@ -214,7 +219,7 @@ public class PersonalFragment extends Fragment {
                 if (task.isSuccessful()) {
                     Uri downloadUri = task.getResult();
                     Log.i("LINKANH", downloadUri.toString());
-                    database.child(DBPROJECTNAME).child(DBUSER).child(uId).child("avatar").setValue(downloadUri.toString());
+                    mDatabaseRef.child(DBPROJECTNAME).child(DBUSER).child(uId).child("avatar").setValue(downloadUri.toString());
                 } else {
                     Toast.makeText(getActivity(), "Có lỗi!!!", Toast.LENGTH_SHORT).show();
                 }

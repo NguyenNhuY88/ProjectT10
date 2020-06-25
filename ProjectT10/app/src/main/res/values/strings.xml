@@ -49,5 +49,13 @@
     <string name="scan_card">Quét Thẻ</string>
     <string name="delete">Xóa</string>
     <string name="toast_empty_email">Nhập email đã đăng ký</string>
+    <string name="scan_qr_code">Scan QRCode</string>
+    <string name="history">Lịch sử</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="wifi_changing_network">wifi changing network</string>
+    <string name="button_wifi">wifi button</string>
+    <string name="result_wifi">result wifi</string>
 
 </resources>

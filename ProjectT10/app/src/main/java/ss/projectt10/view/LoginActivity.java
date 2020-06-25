@@ -1,6 +1,7 @@
 package ss.projectt10.view;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
@@ -8,6 +9,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -17,22 +19,30 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.FirebaseDatabase;
 
 import ss.projectt10.BaseActivity;
 import ss.projectt10.HomeActivity;
 import ss.projectt10.R;
+
+import static ss.projectt10.helper.Util.START_FIRST;
 
 
 public class LoginActivity extends BaseActivity {
     private EditText mEmailField, mPasswordField;
     private FirebaseAuth mAuth;
 
-    private Button mSignUpButton, mLogInButton, mResetButton;
+    private Button mSignUpButton, mLogInButton, mResetButton, mLoginWihtPhone;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        if (START_FIRST == 1) {
+            initGetInstanceFirebase();
+            START_FIRST = 0;
+        }
 
         //Get Firebase auth instance
         mAuth = FirebaseAuth.getInstance();
@@ -43,10 +53,10 @@ public class LoginActivity extends BaseActivity {
         }
 
         // set the view now
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_login);
 
-//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-//        setSupportActionBar(toolbar);
+
 
         mEmailField = (EditText) findViewById(R.id.email);
         mPasswordField = (EditText) findViewById(R.id.password);
@@ -54,9 +64,14 @@ public class LoginActivity extends BaseActivity {
         mSignUpButton = (Button) findViewById(R.id.btn_signup);
         mLogInButton = (Button) findViewById(R.id.btn_login);
         mResetButton = (Button) findViewById(R.id.btn_reset_password);
+        mLoginWihtPhone = (Button) findViewById(R.id.btn_login_with_phone_number);
 
-        //Get Firebase auth instance
-        mAuth = FirebaseAuth.getInstance();
+        mLoginWihtPhone.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(LoginActivity.this, LoginWithPhoneNumber.class));
+            }
+        });
 
         mSignUpButton.setOnClickListener(new View.OnClickListener() {
             @Override

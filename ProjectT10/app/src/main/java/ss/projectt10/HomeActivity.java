@@ -30,7 +30,7 @@ public class HomeActivity extends AppCompatActivity {
         // menu should be considered as top level destinations.
 
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.navigation_personal, R.id.navigation_cards, R.id.navigation_search)
+                R.id.navigation_personal,R.id.navigation_history, R.id.navigation_cards,  R.id.navigation_scan_qrcode, R.id.navigation_favorite)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(HomeActivity.this, navController, appBarConfiguration);
@@ -52,10 +52,6 @@ public class HomeActivity extends AppCompatActivity {
                 startActivity(new Intent(this, LoginActivity.class));
                 finish();
                 return true;
-//            case R.id.action_changPassword:
-//                Intent intent = new Intent(this, ChangePasswordActivity.class);
-//                startActivity(intent);
-//                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }

@@ -29,7 +29,7 @@
         android:layout_alignLeft="@+id/heading_label"
         android:layout_marginTop="5dp"
         android:layout_marginRight="20dp"
-        android:background="@drawable/search_layout"
+        android:background="@drawable/circle_corner_layout"
         android:ems="10"
         android:fontFamily="@font/nunito_semibold"
         android:hint="Nhập tên thẻ"
@@ -41,38 +41,7 @@
         android:textColor="#999999"
         android:textSize="16sp" />
 
-<!--    <TextView-->
-<!--        android:id="@+id/tv_location"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_below="@id/search_field"-->
-<!--        android:layout_marginStart="30dp"-->
-<!--        android:layout_marginLeft="30dp"-->
-<!--        android:layout_marginTop="23dp"-->
-<!--        android:text="Chọn khu vực" />-->
 
-
-<!--    <Spinner-->
-<!--        android:id="@+id/spnCategory"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_below="@id/search_field"-->
-<!--        android:layout_marginStart="10dp"-->
-<!--        android:layout_marginLeft="10dp"-->
-<!--        android:layout_marginTop="20dp"-->
-<!--        android:layout_toEndOf="@id/tv_location"-->
-<!--        android:layout_toRightOf="@id/tv_location" />-->
-
-<!--    <Button-->
-<!--        android:id="@+id/btn_add_other_card"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="37dp"-->
-<!--        android:layout_below="@id/search_field"-->
-<!--        android:layout_alignParentRight="true"-->
-<!--        android:layout_marginTop="9dp"-->
-<!--        android:layout_marginRight="9dp"-->
-<!--        android:gravity="center"-->
-<!--        android:text="Chọn thẻ khác " />-->
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rc_favorite_list"

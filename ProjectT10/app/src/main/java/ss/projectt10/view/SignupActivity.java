@@ -48,8 +48,8 @@ public class SignupActivity extends BaseActivity {
         mPasswordField = (EditText) findViewById(R.id.edt_pasword);
         mUserNameField = (EditText) findViewById(R.id.edt_username);
         setProgressBar(R.id.progressBar);
-        mDatabase = FirebaseDatabase.getInstance().getReference();
-
+        mDatabase = databaseInstance.getReference();
+        mDatabase.keepSynced(true);
         // khi nhan dang ky
         mSignUpButton.setOnClickListener(new View.OnClickListener() {
             @Override

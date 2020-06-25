@@ -3,6 +3,10 @@ package ss.projectt10.model;
 import com.google.firebase.database.Exclude;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -20,6 +24,8 @@ public class Card implements Serializable {
     private String note;
 
     private boolean isFavorite;
+    private long useTime;
+    private String useTimeID;
     public Card() {
     }
 
@@ -34,6 +40,22 @@ public class Card implements Serializable {
         this.cardAvatar = cardAvatar;
         this.note = note;
         this.isFavorite = isFavorite;
+    }
+
+    public String getUseTimeID() {
+        return useTimeID;
+    }
+
+    public void setUseTimeID(String useTimeID) {
+        this.useTimeID = useTimeID;
+    }
+
+    public long getUseTime() {
+        return useTime;
+    }
+
+    public void setUseTime(long useTime) {
+        this.useTime = useTime;
     }
 
     public String getID() {
